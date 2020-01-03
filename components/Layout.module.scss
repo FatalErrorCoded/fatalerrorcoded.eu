@@ -1,0 +1,24 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.4;
+}
+
+code {
+    font-family: "monospace";
+}
+
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .main-content {
+        flex: 1;
+        width: 100%;
+        max-width: 700px;
+    }
+}
+
+.main-header {
+    margin: 20px 0px;
+    h2, h4 { margin: 0px; }
+}
