@@ -64,8 +64,30 @@ const IndexPage: NextPage = () => {
                     name="memeos" repository="https://gitlab.insrt.uk/fatalerrorcoded/memeos" status="Active"
                 >
                     <span style={{ textDecoration: "line-through" }}>An epic meme OS for epic memers</span><br />
-                    <span>An attempt at an operating system in Rust</span>
+                    <span>An attempt at an operating system in Rust</span><br />
+                    <span>Currently in the state of printing to the screen</span>
                 </Project>
+                <Project
+                    name="jschlatt" repository="https://github.com/fatalerrorcoded/jschlatt" status="On hold"
+                >
+                    <span>A joke Discord bot that sends/plays jschlatt quotes</span>
+                </Project>
+                <Project
+                    name="Rusty Fractals" repository="https://github.com/fatalerrorcoded/rusty-fractals" status='"complete"'
+                >
+                    <span>An OpenGL mandelbrot set viewer coded in Rust</span><br />
+                    <span>Functional, but pretty buggy</span>
+                </Project>
+                <Project
+                    name="victusrp.gq" repository="https://gitlab.insrt.uk/fatalerrorcoded/victusrp.gq" status="Abandoned"
+                >
+                    <span>A website for a Czech GTA V roleplay server</span><br />
+                    <span>Probably my best work done without utilizing React, but abandoned after the GTA V server has been shut down.</span>
+                </Project>
+            </section>
+            <section>
+                <h1>Contact Me</h1>
+                <p>Any questions and inquiries can be sent to me@fatalerrorcoded.eu, or you can send me a message on my Discord FatalErrorCoded#4173</p>
             </section>
         </Layout>
     )
