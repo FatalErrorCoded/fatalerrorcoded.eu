@@ -43,7 +43,7 @@ const Project: React.FunctionComponent<ProjectProps> = (props) => {
 
 const IndexPage: NextPage = () => {
     return (
-        <Layout>
+        <Layout canonical="/">
             <section>
                 <h1>Who the frick are you?</h1>
                 <p>Hello there. I am a 16 year old Czech dude who does coding and stuff.</p>

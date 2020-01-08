@@ -1,10 +1,25 @@
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.4;
+    color: #454545;
+    //background-color: #F8F8F8;
 }
 
 code {
     font-family: "monospace";
+}
+
+a {
+    $normal-color: #0077aa;
+    $visited-color: #990066;
+    font-weight: 500;
+    color: $normal-color;
+    transition: color 0.1s ease;
+    &:visited { color: $visited-color; }
+    &:hover  {
+        color: lighten($normal-color, 30);
+        &:visited { color: lighten($visited-color, 30); }
+    }
 }
 
 .main-wrapper {
@@ -15,10 +30,30 @@ code {
         flex: 1;
         width: 100%;
         max-width: 700px;
+        padding: 0px 5px;
+        box-sizing: border-box;
     }
 }
 
 .main-header {
     margin: 20px 0px;
-    h2, h4 { margin: 0px; }
+    h2, h4 { margin: 7px 0px; }
+    display: flex;
+    .navigation a {
+        color: #454545;
+        text-decoration: none;
+    }
+
+    @media screen and (min-width: 600px) {
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 599px) {
+        flex-direction: column;
+        .navigation {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
 }
