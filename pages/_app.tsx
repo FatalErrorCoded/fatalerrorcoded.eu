@@ -6,13 +6,17 @@ import { useRouter } from "next/router";
 const SiteApp: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     let router = useRouter();
     useEffect(() => {
-        router.events.on("routeChangeStart", (url) => {
-            console.log(url);
-            console.log(document.title);
+        router.events.on("routeChangeComplete", (url) => {
             if (window && (window as any)._paq) {
                 (window as any)._paq.push(["setCustomUrl", url]);
                 (window as any)._paq.push(["setDocumentTitle", document.title]);
                 (window as any)._paq.push(["trackPageView"]);
+            }
+        });
+
+        router.events.on("routeChangeError", (err, url) => {
+            if (window && (window as any)._paq) {
+                (window as any)._paq.push(["trackEvent", "error", url, err]);
             }
         });
 
