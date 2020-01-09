@@ -13,5 +13,8 @@ module.exports = withSass({
         REMOTE_HOSTNAME: process.env.REMOTE_HOSTNAME,
 
         GITHUB_REPO: process.env.GITHUB_REPO,
+
+        MATOMO_URI: process.env.MATOMO_URI,
+        MATOMO_ID: process.env.MATOMO_ID,
     }
 });
