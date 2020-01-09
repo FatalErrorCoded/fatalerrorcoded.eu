@@ -35,7 +35,7 @@ const Layout: React.FunctionComponent<Props> = ({
                 <div className="navigation">
                     <code>{isBlog
                         ? <Link href="/"><a>portfolio</a></Link>
-                        : <Link href="/blog"><a>blog</a></Link>
+                        : <Link href="/posts"><a>blog</a></Link>
                     }</code>
                 </div>
             </header>

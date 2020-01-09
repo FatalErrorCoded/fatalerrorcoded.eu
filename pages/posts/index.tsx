@@ -1,25 +1,22 @@
 import { NextPage } from "next";
+import NextError from "next/error";
 import Link from "next/link";
+
 import axios from "axios";
 
 import Layout from "../../components/Layout";
 import getHostname from "../../src/getHostname";
 
 const BlogIndexPage: NextPage<{posts?: any, status: number}> = ({ posts, status }) => {
-    if (status !== 200) {
-        return (
-            <Layout isBlog={true} canonical={"/blog"}>
-                <span>{status}</span>
-            </Layout>
-        )
-    }
+    if (status !== 200)
+        return <NextError statusCode={status} />
 
     let post_tags = [];
     for (let post of posts.posts) {
         post_tags.push(
             <div key={post.id}>
                 <h3 style={{margin: "0px"}}>
-                    <Link href="/blog/[id]" as={`/blog/${post.titleid}-${post.id}`}>
+                    <Link href="/posts/[id]" as={`/posts/${post.titleid}-${post.id}`}>
                         <a>{post.title}</a>
                     </Link>
                 </h3>
@@ -37,6 +34,7 @@ const BlogIndexPage: NextPage<{posts?: any, status: number}> = ({ posts, status 
 
 BlogIndexPage.getInitialProps = async (context) => {
     let res = await axios.get(`${getHostname(context.req)}/api/posts`);
+    if (context.res) context.res.statusCode = res.status;
 
     return {
         posts: res.status === 200 ? res.data.data : undefined,

@@ -1,4 +1,7 @@
 import { NextPage } from "next";
+import NextError from "next/error";
+import Head from "next/head";
+
 import axios from "axios";
 import Markdown from "react-markdown";
 
@@ -6,16 +9,14 @@ import Layout from "../../components/Layout";
 import getHostname from "../../src/getHostname";
 
 const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id, post, status }) => {
-    if (status !== 200) {
-        return (
-            <Layout isBlog={true}>
-                <span>{status}</span>
-            </Layout>
-        )
-    }
+    if (status !== 200)
+        return <NextError statusCode={status} />;
 
     return (
-        <Layout isBlog={true} canonical={`/blog/${id}`} title={post.title}>
+        <Layout isBlog={true} canonical={`/posts/${id}`} title={post.title}>
+            <Head>
+                <meta property="og:description" content={post.summary} />
+            </Head>
             <h2>{post.title}</h2>
             <Markdown source={post.content} />
         </Layout>

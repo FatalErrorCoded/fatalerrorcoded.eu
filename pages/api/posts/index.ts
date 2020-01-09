@@ -44,8 +44,8 @@ const GetPosts = (req: NextApiRequest & {db: Connection}, res: NextApiResponse) 
             for (let post of post_result) {
                 // Saving data yes
                 if (!post.summary) {
-                    post.summary = post.content.split("\r\n\r\n")[0];
-                    if (post.summary.length > 200) post.summary = post.summary.substring(0, 200) + "...";
+                    post.summary = post.content.replace(/\r/g, "").split("\n\n")[0];
+                    if (post.summary.length > 150) post.summary = post.summary.substring(0, 150) + "...";
                 }
                 post.content = undefined;
 

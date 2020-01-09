@@ -34,7 +34,13 @@ const GetPostById = (req: NextApiRequest & {db: Connection}, res: NextApiRespons
             return;
         }
 
-        res.status(200).send(JSON.stringify({ success: true, data: result[0] }));
+        let post = result[0];
+        if (!post.summary) {
+            post.summary = post.content.replace(/\r/g, "").split("\n\n")[0];
+            if (post.summary.length > 150) post.summary = post.summary.substring(0, 150) + "...";
+        }
+
+        res.status(200).send(JSON.stringify({ success: true, data: post }));
         res.end();
     });
 }
