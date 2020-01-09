@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import axios from "axios";
+import Markdown from "react-markdown";
 
 import Layout from "../../components/Layout";
-import Markdown from "react-markdown";
+import getHostname from "../../src/getHostname";
 
 const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id, post, status }) => {
     if (status !== 200) {
@@ -22,13 +23,21 @@ const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id,
 }
 
 BlogIndexPage.getInitialProps = async (context) => {
-    let id = context.query.id.toString();
-    let res = await axios.get(`http://localhost:3000/api/posts/${id}`);
+    let splitid = context.query.id.toString().split("-")
+    let id = splitid.pop();
+    let titleid = splitid.join("-");
+    let status = 200;
+
+    let res = await axios.get(`${getHostname(context.req)}/api/posts/${id}`);
+    if (res.status !== 200 || titleid !== res.data.data.titleid) {
+        status = res.status !== 200 ? res.status : 404;
+        if (context.res)
+            context.res.statusCode = status;
+    }
 
     return {
         post: res.status === 200 ? res.data.data : undefined,
-        status: res.status,
-        id
+        status, id: `${titleid}-${id}`
     }
 }
 
