@@ -11,5 +11,7 @@ module.exports = withSass({
 
         LOCAL_HOSTNAME: process.env.LOCAL_HOSTNAME,
         REMOTE_HOSTNAME: process.env.REMOTE_HOSTNAME,
+
+        GITHUB_REPO: process.env.GITHUB_REPO,
     }
 });

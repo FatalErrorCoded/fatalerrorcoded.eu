@@ -33,12 +33,18 @@ const BlogIndexPage: NextPage<{posts?: any, status: number}> = ({ posts, status 
 }
 
 BlogIndexPage.getInitialProps = async (context) => {
-    let res = await axios.get(`${getHostname(context.req)}/api/posts`);
-    if (context.res) context.res.statusCode = res.status;
+    try {
+        let res = await axios.get(`${getHostname(context.req)}/api/posts`);
+        if (context.res) context.res.statusCode = res.status;
 
-    return {
-        posts: res.status === 200 ? res.data.data : undefined,
-        status: res.status
+        return {
+            posts: res.status === 200 ? res.data.data : undefined,
+            status: res.status
+        }
+    } catch (err) {
+        let status = err.response.status !== undefined ? err.response.status : 500;
+        if (context.res) context.res.statusCode = status;
+        return { status };
     }
 }
 

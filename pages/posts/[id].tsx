@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import axios from "axios";
 import Markdown from "react-markdown";
+import ReactUtterances from "react-utterances";
 
 import Layout from "../../components/Layout";
 import getHostname from "../../src/getHostname";
@@ -19,6 +20,10 @@ const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id,
             </Head>
             <h2>{post.title}</h2>
             <Markdown source={post.content} />
+            { process.env.GITHUB_REPO && (
+                <ReactUtterances repo={process.env.GITHUB_REPO}
+                    type="pathname" />
+            )}
         </Layout>
     );
 }
@@ -28,17 +33,23 @@ BlogIndexPage.getInitialProps = async (context) => {
     let id = splitid.pop();
     let titleid = splitid.join("-");
     let status = 200;
+    
+    try {
+        let res = await axios.get(`${getHostname(context.req)}/api/posts/${id}`);
+        if (res.status !== 200 || titleid !== res.data.data.titleid) {
+            status = res.status !== 200 ? res.status : 404;
+            if (context.res)
+                context.res.statusCode = status;
+        }
 
-    let res = await axios.get(`${getHostname(context.req)}/api/posts/${id}`);
-    if (res.status !== 200 || titleid !== res.data.data.titleid) {
-        status = res.status !== 200 ? res.status : 404;
-        if (context.res)
-            context.res.statusCode = status;
-    }
-
-    return {
-        post: res.status === 200 ? res.data.data : undefined,
-        status, id: `${titleid}-${id}`
+        return {
+            post: res.status === 200 ? res.data.data : undefined,
+            status, id: `${titleid}-${id}`
+        }
+    } catch (err) {
+        let status = err.response.status !== undefined ? err.response.status : 500;
+        if (context.res) context.res.statusCode = status;
+        return { status, id: `${titleid}-${id}` };
     }
 }
 
