@@ -11,13 +11,15 @@
     "@material-ui/core": "^4.8.2",
     "@material-ui/icons": "^4.5.1",
     "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.19.1",
     "dotenv": "^8.2.0",
     "isomorphic-unfetch": "3.0.0",
     "mysql": "^2.17.1",
     "next": "latest",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-markdown": "^4.3.1"
   },
   "devDependencies": {
     "@types/mysql": "^2.15.8",

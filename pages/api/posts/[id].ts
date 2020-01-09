@@ -4,6 +4,7 @@ import { Connection } from "mysql";
 import withMiddleware from "../../../middleware";
 
 const GetPostById = (req: NextApiRequest & {db: Connection}, res: NextApiResponse) => {
+    res.setHeader("Content-Type", "application/json");
     if (!req.query.id) {
         res.status(400).send(JSON.stringify({
             success: false,
