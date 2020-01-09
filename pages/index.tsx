@@ -18,6 +18,11 @@ const Project: React.FunctionComponent<ProjectProps> = (props) => {
         <ExpansionPanel>
             <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
+                onClick={() => {
+                    if (window && (window as any)._paq) {
+                        (window as any)._paq.push(["trackEvent", "Project", props.name]);
+                    }
+                }}
             >
                 <b>{props.name}</b>
             </ExpansionPanelSummary>

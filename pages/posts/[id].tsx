@@ -2,6 +2,8 @@ import { NextPage } from "next";
 import NextError from "next/error";
 import Head from "next/head";
 
+import { useRef, useEffect } from "react";
+
 import axios from "axios";
 import Markdown from "react-markdown";
 import ReactUtterances from "react-utterances";
@@ -9,17 +11,26 @@ import ReactUtterances from "react-utterances";
 import Layout from "../../components/Layout";
 import getHostname from "../../src/getHostname";
 
-const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id, post, status }) => {
+const BlogPostPage: NextPage<{id: string, post?: any, status: number}> = ({ id, post, status }) => {
     if (status !== 200)
         return <NextError statusCode={status} />;
+
+    let postRef = useRef<HTMLElement>(null);
+    useEffect(() => {
+        if (window && (window as any)._paq && postRef !== undefined) {
+            (window as any)._paq.push(["trackContentImpressionsWithinNode", postRef.current]);
+        }
+    }, []);
 
     return (
         <Layout isBlog={true} canonical={`/posts/${id}`} title={post.title}>
             <Head>
                 <meta property="og:description" content={post.summary} />
             </Head>
-            <h2>{post.title}</h2>
-            <Markdown source={post.content} />
+            <article ref={postRef}>
+                <h2>{post.title}</h2>
+                <Markdown source={post.content} />
+            </article>
             { process.env.GITHUB_REPO && (
                 <ReactUtterances repo={process.env.GITHUB_REPO}
                     type="pathname" />
@@ -28,7 +39,7 @@ const BlogIndexPage: NextPage<{id: string, post?: any, status: number}> = ({ id,
     );
 }
 
-BlogIndexPage.getInitialProps = async (context) => {
+BlogPostPage.getInitialProps = async (context) => {
     let splitid = context.query.id.toString().split("-")
     let id = splitid.pop();
     let titleid = splitid.join("-");
@@ -53,4 +64,4 @@ BlogIndexPage.getInitialProps = async (context) => {
     }
 }
 
-export default BlogIndexPage;
+export default BlogPostPage;

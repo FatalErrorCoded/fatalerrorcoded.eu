@@ -8,9 +8,11 @@ const SiteApp: React.FunctionComponent<AppProps> = ({ Component, pageProps }) =>
     useEffect(() => {
         router.events.on("routeChangeComplete", (url) => {
             if (window && (window as any)._paq) {
-                (window as any)._paq.push(["setCustomUrl", url]);
-                (window as any)._paq.push(["setDocumentTitle", document.title]);
-                (window as any)._paq.push(["trackPageView"]);
+                setTimeout(() => {
+                    (window as any)._paq.push(["setCustomUrl", url]);
+                    (window as any)._paq.push(["setDocumentTitle", document.title]);
+                    (window as any)._paq.push(["trackPageView"]);
+                }, 150);
             }
         });
 
