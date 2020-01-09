@@ -52,11 +52,11 @@ const GetPosts = (req: NextApiRequest & {db: Connection}, res: NextApiResponse) 
                 posts.push(post);
             }
 
-            console.log(count_result);
+            let page_count = Math.floor((count_result[0]["COUNT(*)"] - 1) / 10) + 1;
             let json = {
                 success: true,
                 data: {
-                    page_count: count_result[0]["COUNT(*)"],
+                    page_count: page_count,
                     posts: post_result
                 }
             }
